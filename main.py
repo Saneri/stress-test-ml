@@ -16,5 +16,6 @@ async def analyze(request: RequestPayload):
     if not len(request.messageList):
         raise HTTPException(status_code=422, detail="Empty list in request payload")
     results = model.predict(cv.transform(request.messageList).toarray())
-    stressAverage = float(np.average(results))
-    return {"stressAverage": stressAverage}
+    resultsList = [int(x) for x in results]
+    # stressAverage = float(np.average(results))
+    return {"stressAverage": resultsList}
